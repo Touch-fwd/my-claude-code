@@ -1,6 +1,6 @@
 package com.learnclaudecode.common;
 
-import com.learnclaudecode.model.AnthropicResponse;
+import com.learnclaudecode.model.LLMResponse;
 
 import java.io.IOException;
 import java.net.URI;
@@ -47,7 +47,7 @@ public class LLMClient {
      * @param maxTokens 最大输出 token 数
      * @return 模型响应
      */
-    public AnthropicResponse createMessage(String system, List<?> messages, List<?> tools, int maxTokens) {
+    public LLMResponse createMessage(String system, List<?> messages, List<?> tools, int maxTokens) {
         // 请求体字段尽量对齐 Anthropic messages API，便于兼容 Anthropic-compatible 提供方。
         // 这里的 payload 就是一次“大模型推理请求”的完整输入：
         // 1. model: 用哪个模型；
@@ -88,7 +88,7 @@ public class LLMClient {
                 throw new IllegalStateException("Anthropic API 调用失败: HTTP " + response.statusCode() + "\n" + response.body());
             }
             // 解析后的结果会交回 AgentRuntime，由它判断本轮是文本回复还是 tool_use。
-            return JsonUtils.fromJson(response.body(), AnthropicResponse.class);
+            return JsonUtils.fromJson(response.body(), LLMResponse.class);
         } catch (IOException | InterruptedException e) {
             // 中断时也统一转成业务异常，避免上层每处都重复处理网络细节。
             Thread.currentThread().interrupt();
