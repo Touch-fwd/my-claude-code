@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 轻量级 Anthropic Messages API 调用器。
- *
  * 对刚接触大模型开发的读者来说，可以把这个类理解为“模型网关”：
  * - AgentRuntime 负责决定“下一步要不要调模型”；
  * - StageConfig 负责决定“这一轮允许模型使用哪些工具”；
@@ -24,7 +22,7 @@ import java.util.Map;
  * 而是把当前对话历史、system prompt、tool 定义一起发给模型，
  * 再由模型返回文本回答或 tool_use 指令。
  */
-public class AnthropicClient {
+public class LLMClient {
     private final EnvConfig config;
     private final HttpClient httpClient;
 
@@ -33,7 +31,7 @@ public class AnthropicClient {
      *
      * @param config 环境配置
      */
-    public AnthropicClient(EnvConfig config) {
+    public LLMClient(EnvConfig config) {
         this.config = config;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(30))

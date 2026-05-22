@@ -21,11 +21,30 @@ public final class EnvConfig {
      */
     public EnvConfig() {
         // 优先允许从 .env 读取，同时兼容系统环境变量覆盖。
-        this.dotenv = Dotenv.configure().ignoreIfMissing().load();
+        this.dotenv = Dotenv.configure()
+                .directory(findDotenvDirectory().toString())
+                .ignoreIfMissing()
+                .load();
         this.modelId = require("MODEL_ID");
-        this.apiKey = getenv("ANTHROPIC_API_KEY").orElse("");
-        this.baseUrl = getenv("ANTHROPIC_BASE_URL").orElse("https://api.anthropic.com");
+        this.apiKey = getenv("DASHSCOPE_API_KEY")
+                .orElse("");
+        this.baseUrl = getenv("QWEN_BASE_URL")
+                .orElse("https://dashscope.aliyuncs.com/apps/anthropic");
         this.workdir = Paths.get("").toAbsolutePath().normalize();
+    }
+
+    /**
+     * 从当前工作目录向上查找 .env，避免 IDE 或打包运行时切换工作目录后读不到配置。
+     */
+    private Path findDotenvDirectory() {
+        Path current = Paths.get("").toAbsolutePath().normalize();
+        while (current != null) {
+            if (current.resolve(".env").toFile().isFile()) {
+                return current;
+            }
+            current = current.getParent();
+        }
+        return Paths.get("").toAbsolutePath().normalize();
     }
 
     /**
@@ -35,7 +54,9 @@ public final class EnvConfig {
      * @return 环境变量值
      */
     private String require(String key) {
-        return getenv(key).orElseThrow(() -> new IllegalStateException("缺少环境变量: " + key));
+        return getenv(key).orElseThrow(() -> new IllegalStateException(
+                "缺少环境变量: " + key + "。请在项目根目录创建 .env，或在运行配置里设置该环境变量。"
+        ));
     }
 
     /**

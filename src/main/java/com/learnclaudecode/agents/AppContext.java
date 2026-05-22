@@ -1,7 +1,7 @@
 package com.learnclaudecode.agents;
 
 import com.learnclaudecode.background.BackgroundManager;
-import com.learnclaudecode.common.AnthropicClient;
+import com.learnclaudecode.common.LLMClient;
 import com.learnclaudecode.common.EnvConfig;
 import com.learnclaudecode.common.WorkspacePaths;
 import com.learnclaudecode.context.CompressionService;
@@ -41,7 +41,7 @@ public final class AppContext {
         // 这样设计有两个好处：
         // 1. 每个阶段入口类都不需要重复写装配代码；
         // 2. 学习时可以很清楚地看到 Claude Code 风格 Agent 的分层结构。
-        AnthropicClient client = new AnthropicClient(env);
+        LLMClient client = new LLMClient(env);
         CommandTools commandTools = new CommandTools(paths);
         TodoManager todoManager = new TodoManager();
         SkillLoader skillLoader = new SkillLoader(paths);

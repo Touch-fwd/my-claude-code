@@ -1,7 +1,7 @@
 package com.learnclaudecode.agents;
 
 import com.learnclaudecode.background.BackgroundManager;
-import com.learnclaudecode.common.AnthropicClient;
+import com.learnclaudecode.common.LLMClient;
 import com.learnclaudecode.common.JsonUtils;
 import com.learnclaudecode.common.WorkspacePaths;
 import com.learnclaudecode.context.CompressionService;
@@ -38,7 +38,7 @@ import java.util.Scanner;
  * “LLM 负责决定下一步动作，本地运行时负责真正执行动作并反馈结果”。
  */
 public class AgentRuntime {
-    private final AnthropicClient client;
+    private final LLMClient client;
     private final WorkspacePaths paths;
     private final CommandTools commandTools;
     private final TodoManager todoManager;
@@ -65,7 +65,7 @@ public class AgentRuntime {
      * @param teammateManager TeammateManager 实例
      * @param worktreeManager WorktreeManager 实例
      */
-    public AgentRuntime(AnthropicClient client,
+    public AgentRuntime(LLMClient client,
                         WorkspacePaths paths,
                         CommandTools commandTools,
                         TodoManager todoManager,

@@ -1,6 +1,6 @@
 package com.learnclaudecode.context;
 
-import com.learnclaudecode.common.AnthropicClient;
+import com.learnclaudecode.common.LLMClient;
 import com.learnclaudecode.common.JsonUtils;
 import com.learnclaudecode.common.WorkspacePaths;
 import com.learnclaudecode.model.ChatMessage;
@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ import java.util.Map;
  */
 public class CompressionService {
     private final WorkspacePaths paths;
-    private final AnthropicClient client;
+    private final LLMClient client;
     private final int threshold;
     private final int keepRecent;
 
@@ -40,7 +39,7 @@ public class CompressionService {
      * @param threshold 触发自动压缩的阈值
      * @param keepRecent micro compact 时保留的最近结果数
      */
-    public CompressionService(WorkspacePaths paths, AnthropicClient client, int threshold, int keepRecent) {
+    public CompressionService(WorkspacePaths paths, LLMClient client, int threshold, int keepRecent) {
         this.paths = paths;
         this.client = client;
         this.threshold = threshold;
